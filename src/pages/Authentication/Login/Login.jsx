@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
+import SocialLogin from '../SocialLogin/SocialLogin';
 
 const Login = () => {
     const {register,handleSubmit, formState:{errors}} = useForm()
@@ -35,6 +36,7 @@ const Login = () => {
                 <p>New This Website?  <span className='btn btn-link'><Link to='/register'>Register</Link></span></p>
                 <button className="btn btn-primary text-black mt-4">Login</button>
             </form>
+            <SocialLogin></SocialLogin>
         </div>
     );
 };
