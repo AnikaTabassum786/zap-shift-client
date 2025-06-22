@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import ProductLogo from '../ProductLogo/ProductLogo';
 
 const Navbar = () => {
@@ -7,7 +7,8 @@ const Navbar = () => {
     const navItems =
     <>
     <li><NavLink to='/'>Home</NavLink></li>
-     <li><NavLink to='/about'>About</NavLink></li>
+    <li><NavLink to='/coverage'>Coverage</NavLink></li>
+    <li><NavLink to='/about'>About</NavLink></li>
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm">
@@ -29,8 +30,10 @@ const Navbar = () => {
                     {navItems}
                 </ul>
             </div>
-            <div className="navbar-end">
-                <a className="btn">Button</a>
+            <div className="navbar-end gap-2">
+                {/* <a className="btn">Button</a> */}
+               <Link to={'/login'}> <button  className='btn'>Login</button></Link>
+                <Link to={'/register'}><button className='btn'>Register</button></Link>
             </div>
         </div>
     );
