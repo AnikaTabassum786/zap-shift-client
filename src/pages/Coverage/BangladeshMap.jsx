@@ -14,7 +14,7 @@ const customIcon = new L.Icon({
     iconAnchor: [12, 41],
 });
 
-const BangladeshMap = () => {
+const BangladeshMap = ({serviceCenters}) => {
   const position = [23.6850, 90.3563]; // Center of Bangladesh
 
   return (
@@ -29,9 +29,19 @@ const BangladeshMap = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={position} icon={customIcon}>
-          <Popup>Center of Bangladesh 🇧🇩</Popup>
-        </Marker>
+       {
+        serviceCenters.map((center,index)=><Marker
+        key={index}
+        position={[center.latitude,center.longitude]}
+        icon={customIcon}
+        >
+          <Popup>
+            <strong>{center.district}</strong> <br></br>
+            {center.covered_area.join(', ')}
+          </Popup>
+
+        </Marker>)
+       }
       </MapContainer>
     </div>
   );
