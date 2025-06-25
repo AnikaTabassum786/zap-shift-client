@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router';
 import ProductLogo from '../ProductLogo/ProductLogo';
+import useAuth from '../../../hooks/useAuth';
 
 const Navbar = () => {
+
+    const {user} = useAuth();
 
     const navItems =
     <>
@@ -10,6 +13,13 @@ const Navbar = () => {
     <li><NavLink to='/coverage'>Coverage</NavLink></li>
     <li><NavLink to='/about'>About</NavLink></li>
     <li><NavLink to='/sendParcel'>Send Parcel</NavLink></li>
+
+    {
+        user && 
+        <>
+         <li><NavLink to='/dashboard'>DashBoard</NavLink></li>
+        </>
+    }
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm">
