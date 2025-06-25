@@ -10,17 +10,24 @@ import {
 import { router } from './router/router.jsx';
 import 'aos/dist/aos.css';
 import Aos from 'aos';
-import 'aos/dist/aos.css'; 
+import 'aos/dist/aos.css';
 import AuthProvider from './context/AuthContext/AuthProvider.jsx';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 Aos.init()
+
+// Create a client
+const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <div className='font-uniquifier max-w-7xl mx-auto'>
-     <AuthProvider>
-       <RouterProvider router={router} />
-     </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </QueryClientProvider>
+
     </div>
   </StrictMode>,
 )
