@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import useAuth from '../../../hooks/useAuth';
 
 const PaymentForm = () => {
+
+    const {user} = useAuth();
 
     const stripe = useStripe();
     const elements = useElements();
@@ -46,6 +49,7 @@ const PaymentForm = () => {
             return;
         }
 
+        //step-1: check valid card 
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card
@@ -59,42 +63,45 @@ const PaymentForm = () => {
         else {
             setError('')
             console.log('Payment method', paymentMethod)
-        }
+            // step-2: create payment intent
+            const res = await axiosSecure.post('/create-payment-intent', {
+                amountInCents,
+                parcelId
+            })
 
-        // step-2: create payment intent
-        const res = await axiosSecure.post('/create-payment-intent', {
-            amountInCents,
-            parcelId
-        })
+            console.log('res from intent', res)
 
-        console.log('res from intent', res)
-
-        const clientSecret = res.data.clientSecret
-        console.log(clientSecret)
+            const clientSecret = res.data.clientSecret
+            console.log(clientSecret)
 
 
 
-        // step-3: confirm payment
+            // step-3: confirm payment
 
-        const result = await stripe.confirmCardPayment(clientSecret, {
-            payment_method: {
-                card: elements.getElement(CardElement),
-                billing_details: {
-                    name: 'Anika',
+            const result = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: elements.getElement(CardElement),
+                    billing_details: {
+                        name: user.displayName,
+                        email:user.email,
 
+                    },
                 },
-            },
-        });
+            });
 
-        if (result.error) {
-            console.log(result.error.message)
-        }
-        else {
-            if (result.paymentIntent.status === 'succeeded') {
-                console.log('Payment succeeded')
-                console.log(result)
+            if (result.error) {
+                setError(result.error.message)
+            }
+            else {
+                setError(' ')
+                if (result.paymentIntent.status === 'succeeded') {
+                    console.log('Payment succeeded')
+                    console.log(result)
+                }
             }
         }
+
+
 
 
 
