@@ -1,12 +1,35 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState } from 'react';
+import { useParams } from 'react-router';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
 
 const PaymentForm = () => {
 
     const stripe = useStripe();
     const element = useElements();
+   
+ const [error,setError] = useState('')
+  const {parcelId} = useParams();
+    console.log(parcelId)
 
-    const [error,setError] = useState('')
+    const axiosSecure = useAxiosSecure();
+
+    const {isPending, data:parcelInfo={}} = useQuery({
+        queryKey: ['parcels',parcelId],
+        queryFn: async()=>{
+            const res = await axiosSecure.get(`/parcels/${parcelId}`)
+            return res.data
+        }
+    })
+
+    if(isPending){
+        return '...loading'
+    }
+
+    console.log(parcelInfo)
+    const amount = parcelInfo.cost
+   
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -43,7 +66,7 @@ const PaymentForm = () => {
 
                 </CardElement>
                 <button type='submit' disabled={!stripe} className='btn btn-primary text-black'>
-                    Pay For Parcel Pickup
+                    Pay  ${amount}
                 </button>
 
                 {

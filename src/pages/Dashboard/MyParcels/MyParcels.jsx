@@ -29,7 +29,7 @@ const MyParcels = () => {
     };
 
     const handlePay = (id) => {
-        console.log("Proceed to payment for", id);
+        // console.log("Proceed to payment for", id);
         // Implement your payment logic
 
            navigate(`/dashboard/payment/${id}`)
