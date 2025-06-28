@@ -1,13 +1,15 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../hooks/useAuth';
+import Swal from 'sweetalert2';
 
 const PaymentForm = () => {
 
     const {user} = useAuth();
+    const navigate = useNavigate()
 
     const stripe = useStripe();
     const elements = useElements();
@@ -96,7 +98,32 @@ const PaymentForm = () => {
                 setError(' ')
                 if (result.paymentIntent.status === 'succeeded') {
                     console.log('Payment succeeded')
-                    console.log(result)
+                    console.log(result);
+
+                    const transactionId = result.paymentIntent.id
+
+                    const paymentData = {
+                        parcelId,
+                        email:user.email,
+                        amount,
+                        transactionId: transactionId,
+                        paymentMethod:result.paymentIntent.payment_method_types
+                    }
+
+                    const paymentRes = await axiosSecure.post('/payments', paymentData);
+                    if(paymentRes.data.insertedId){
+                        // console.log('Payment Successfully')
+                         // ✅ Show SweetAlert with transaction ID
+                        await Swal.fire({
+                            icon: 'success',
+                            title: 'Payment Successful!',
+                            html: `<strong>Transaction ID:</strong> <code>${transactionId}</code>`,
+                            confirmButtonText: 'Go to My Parcels',
+                        });
+
+                        // ✅ Redirect to /myParcels
+                        navigate('/dashboard/myParcels');
+                    }
                 }
             }
         }
