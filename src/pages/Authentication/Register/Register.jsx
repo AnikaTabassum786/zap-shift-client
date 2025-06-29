@@ -1,23 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
 import { Link } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
+import axios from 'axios';
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm()
-    const {createUser} = useAuth()
+    const { createUser,updateUserProfile } = useAuth()
+    const [profilePic, setProfilePic] = useState('')
 
     const onSubmit = (data) => {
         console.log(data)
         // console.log(createUser)
-        createUser(data.email,data.password)
-        .then(result=>{
-            console.log(result.user)
-        })
-        .catch(error =>{
-            console.log(error)
-        })
+        createUser(data.email, data.password, data.name)
+            .then(result => {
+                console.log(result.user)
+
+                //update user profile in firebase
+                const userProfile={
+                    displayName:data.name,
+                    photoURL:profilePic
+                   
+                }
+                updateUserProfile(userProfile)
+                .then(()=>{
+                    console.log('Profile name pic updated')
+        
+                })
+                .catch(error =>{
+                    console.log(error)
+                })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    const handleImageUpload = async (e) => {
+        const image = e.target.files[0]
+        console.log(image)
+
+
+        const formData = new FormData();
+        formData.append('image', image)
+
+        const imgUploadURL = 'https://api.imgbb.com/1/upload?key=511e2e9caf8cd644a8bf5628230588f6'
+
+        const res = await axios.post(imgUploadURL,formData)
+        console.log(res.data.data.url)
+
+        setProfilePic(res.data.data.url)
     }
     return (
 
@@ -25,6 +58,26 @@ const Register = () => {
             <p className='text-3xl '>Create a account</p>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <fieldset className="fieldset">
+
+                    <label className="label">Your image</label>
+                    <input type="file"
+                        onChange={handleImageUpload}
+                        className="input" placeholder="Your Profile Picture" />
+
+                    {
+                        errors.name?.type === 'required' && (
+                            <p className='text-red-500'>Name is Required</p>
+                        )
+                    }
+
+                    <label className="label">Name</label>
+                    <input type="text" {...register('name', { required: true })} className="input" placeholder="Name" />
+
+                    {
+                        errors.name?.type === 'required' && (
+                            <p className='text-red-500'>Name is Required</p>
+                        )
+                    }
 
                     {/* Email */}
 
@@ -40,18 +93,18 @@ const Register = () => {
                     {/* Password */}
 
                     <label className="label">Password</label>
-                    <input type="password" 
-                    {...register('password',{required: true, minLength:6})} 
-                    className="input" placeholder="Password" />
+                    <input type="password"
+                        {...register('password', { required: true, minLength: 6 })}
+                        className="input" placeholder="Password" />
                     {
-                        errors.password?.type==='required' && (
+                        errors.password?.type === 'required' && (
                             <p className='text-red-500'>Password is Required</p>
                         )
                     }
                     {
                         errors.password?.type === 'minLength' && (
                             <p className='text-red-500'>Password Must be 6 characters or longer</p>
-                    
+
                         )
                     }
 
