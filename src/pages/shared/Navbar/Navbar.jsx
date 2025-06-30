@@ -21,7 +21,6 @@ const Navbar = () => {
     <>
     <li><NavLink to='/'>Home</NavLink></li>
     <li><NavLink to='/coverage'>Coverage</NavLink></li>
-    <li><NavLink to='/about'>About</NavLink></li>
     <li><NavLink to='/sendParcel'>Send Parcel</NavLink></li>
 
     {
@@ -30,6 +29,8 @@ const Navbar = () => {
          <li><NavLink to='/dashboard'>DashBoard</NavLink></li>
         </>
     }
+
+    <li><NavLink to='/beARider'>BeARider</NavLink></li>
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm">
@@ -44,7 +45,7 @@ const Navbar = () => {
                        {navItems}
                     </ul>
                 </div>
-                <a className=""><ProductLogo></ProductLogo></a>
+                <div className=""><ProductLogo></ProductLogo></div>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
