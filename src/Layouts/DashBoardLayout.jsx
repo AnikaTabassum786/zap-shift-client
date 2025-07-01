@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router';
-import { FaHome, FaBoxOpen, FaMoneyCheckAlt, FaUserEdit, FaSearchLocation,FaUserCheck, FaUserClock } from 'react-icons/fa';
+import { FaHome, FaBoxOpen, FaMoneyCheckAlt, FaUserEdit, FaSearchLocation,FaUserCheck, FaUserClock,FaUserShield } from 'react-icons/fa';
 
 const DashBoardLayout = () => {
     return (
@@ -86,6 +86,12 @@ const DashBoardLayout = () => {
                             <FaUserClock className="inline-block mr-2" />
                             Pending Riders
                         </NavLink>
+                    </li>
+                     <li>
+                                <NavLink to="/dashboard/makeAdmin">
+                                    <FaUserShield className="inline-block mr-2" />
+                                    Make Admin
+                                </NavLink>
                     </li>
                 </ul>
             </div>
