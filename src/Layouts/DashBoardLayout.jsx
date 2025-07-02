@@ -1,8 +1,11 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router';
 import { FaHome, FaBoxOpen, FaMoneyCheckAlt, FaUserEdit, FaSearchLocation,FaUserCheck, FaUserClock,FaUserShield } from 'react-icons/fa';
+import useUserRole from '../pages/Dashboard/MakeAdmin/useUserRole';
 
 const DashBoardLayout = () => {
+    const {role,roleLoading } = useUserRole()
+    console.log(role)
     return (
        <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -75,7 +78,10 @@ const DashBoardLayout = () => {
                         </NavLink>
                     </li>
 
-                     <li>
+                     {
+                        !roleLoading && role === 'admin'  && (
+                            <>
+                            <li>
                         <NavLink to="/dashboard/active-riders">
                             <FaUserCheck className="inline-block mr-2" />
                             Active Riders
@@ -93,6 +99,9 @@ const DashBoardLayout = () => {
                                     Make Admin
                                 </NavLink>
                     </li>
+                            </>
+                        )
+                     }
                 </ul>
             </div>
         </div>
