@@ -18,6 +18,8 @@ import BeARider from "../pages/Dashboard/BeARider/BeARider";
 import PendingRiders from "../pages/Dashboard/PendingRiders/PendingRiders";
 import ActiveRiders from "../pages/Dashboard/ActiveRiders/ActiveRiders";
 import MakeAdmin from "../pages/Dashboard/MakeAdmin/MakeAdmin";
+import Forbidden from "../pages/Forbidden/Forbidden";
+import AdminRoute from "../routes/AdminRoute";
 
 
 export const router = createBrowserRouter([
@@ -42,7 +44,11 @@ export const router = createBrowserRouter([
       {
         path:'/beARider',
         element:<PrivateRoute><BeARider></BeARider></PrivateRoute>,
-         loader: () => fetch('./serviceCenter.json')
+        loader: () => fetch('./serviceCenter.json')
+      },
+      {
+        path:'/forbidden',
+        Component:Forbidden
       }
       
     ]
@@ -87,15 +93,15 @@ export const router = createBrowserRouter([
       },
       {
         path:'pending-riders',
-        Component:PendingRiders
+        element:<AdminRoute><PendingRiders></PendingRiders></AdminRoute>
       },
       {
         path:'active-riders',
-        Component:ActiveRiders
+        element:<AdminRoute><ActiveRiders></ActiveRiders></AdminRoute>
       },
       {
         path:'makeAdmin',
-        Component:MakeAdmin
+        element:<AdminRoute><MakeAdmin></MakeAdmin></AdminRoute>
       }
     ]
   }

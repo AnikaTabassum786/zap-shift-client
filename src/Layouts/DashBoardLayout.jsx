@@ -1,13 +1,14 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router';
-import { FaHome, FaBoxOpen, FaMoneyCheckAlt, FaUserEdit, FaSearchLocation,FaUserCheck, FaUserClock,FaUserShield } from 'react-icons/fa';
-import useUserRole from '../pages/Dashboard/MakeAdmin/useUserRole';
+import { FaHome, FaBoxOpen, FaMoneyCheckAlt, FaUserEdit, FaSearchLocation, FaUserCheck, FaUserClock, FaUserShield } from 'react-icons/fa';
+import useUserRole from '../hooks/useUserRole';
+
 
 const DashBoardLayout = () => {
-    const {role,roleLoading } = useUserRole()
+    const { role, roleLoading } = useUserRole()
     console.log(role)
     return (
-       <div className="drawer lg:drawer-open">
+        <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col">
 
@@ -31,7 +32,7 @@ const DashBoardLayout = () => {
                         </label>
                     </div>
                     <div className="mx-2 flex-1 px-2 lg:hidden">Dashboard</div>
-                    
+
                 </div>
                 {/* Page content here */}
                 <Outlet></Outlet>
@@ -40,7 +41,7 @@ const DashBoardLayout = () => {
             </div>
             <div className="drawer-side">
                 <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4"> 
+                <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
                     {/* Sidebar content here */}
                     {/* <ProductLogo></ProductLogo> */}
                     {/* <li><a>Home</a></li>
@@ -78,30 +79,30 @@ const DashBoardLayout = () => {
                         </NavLink>
                     </li>
 
-                     {
-                        !roleLoading && role === 'admin'  && (
+                    {
+                        !roleLoading && role === 'admin' && (
                             <>
-                            <li>
-                        <NavLink to="/dashboard/active-riders">
-                            <FaUserCheck className="inline-block mr-2" />
-                            Active Riders
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/dashboard/pending-riders">
-                            <FaUserClock className="inline-block mr-2" />
-                            Pending Riders
-                        </NavLink>
-                    </li>
-                     <li>
-                                <NavLink to="/dashboard/makeAdmin">
-                                    <FaUserShield className="inline-block mr-2" />
-                                    Make Admin
-                                </NavLink>
-                    </li>
+                                <li>
+                                    <NavLink to="/dashboard/active-riders">
+                                        <FaUserCheck className="inline-block mr-2" />
+                                        Active Riders
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/pending-riders">
+                                        <FaUserClock className="inline-block mr-2" />
+                                        Pending Riders
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/makeAdmin">
+                                        <FaUserShield className="inline-block mr-2" />
+                                        Make Admin
+                                    </NavLink>
+                                </li>
                             </>
                         )
-                     }
+                    }
                 </ul>
             </div>
         </div>
