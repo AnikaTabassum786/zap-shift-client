@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router';
-import { FaHome, FaBoxOpen, FaMoneyCheckAlt, FaUserEdit, FaSearchLocation, FaUserCheck, FaUserClock, FaUserShield,FaMotorcycle } from 'react-icons/fa';
+import { FaHome, FaBoxOpen, FaMoneyCheckAlt, FaUserEdit, FaSearchLocation, FaUserCheck, FaUserClock, FaUserShield,FaMotorcycle, FaTasks } from 'react-icons/fa';
 import useUserRole from '../hooks/useUserRole';
 
 
@@ -78,6 +78,19 @@ const DashBoardLayout = () => {
                             Update Profile
                         </NavLink>
                     </li>
+
+                    {
+                        !roleLoading && role ==='rider' && (
+                            <>
+                            <li>
+                                <NavLink to="/dashboard/pending-delivery">
+                                    <FaTasks className="inline-block mr-2" />
+                                    Pending Delivery
+                                </NavLink>
+                            </li>
+                            </>
+                        )
+                    }
 
                     {
                         !roleLoading && role === 'admin' && (
