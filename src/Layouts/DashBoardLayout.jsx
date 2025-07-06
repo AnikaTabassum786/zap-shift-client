@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router';
-import { FaHome, FaBoxOpen, FaMoneyCheckAlt, FaUserEdit, FaSearchLocation, FaUserCheck, FaUserClock, FaUserShield,FaMotorcycle, FaTasks } from 'react-icons/fa';
+import { FaHome, FaBoxOpen, FaMoneyCheckAlt, FaUserEdit, FaSearchLocation, FaUserCheck, FaUserClock, FaUserShield,FaMotorcycle, FaTasks,FaCheckCircle } from 'react-icons/fa';
 import useUserRole from '../hooks/useUserRole';
 
 
@@ -88,6 +88,12 @@ const DashBoardLayout = () => {
                                     Pending Delivery
                                 </NavLink>
                             </li>
+                             <li>
+                            <NavLink to="/dashboard/completed-delivery">
+                                <FaCheckCircle className="inline-block mr-2" />
+                                Completed Deliveries
+                            </NavLink>
+                        </li>
                             </>
                         )
                     }
