@@ -5,6 +5,7 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import useTrackingLogger from '../../../hooks/useTrackingLogger';
 
 const PaymentForm = () => {
 
@@ -19,6 +20,7 @@ const PaymentForm = () => {
     console.log(parcelId)
 
     const axiosSecure = useAxiosSecure();
+    const {logTracking} = useTrackingLogger();
 
     const { isPending, data: parcelInfo = {} } = useQuery({
         queryKey: ['parcels', parcelId],
@@ -31,6 +33,8 @@ const PaymentForm = () => {
     if (isPending) {
         return '...loading'
     }
+
+   
 
     console.log(parcelInfo)
     const amount = parcelInfo.cost
@@ -120,6 +124,14 @@ const PaymentForm = () => {
                             html: `<strong>Transaction ID:</strong> <code>${transactionId}</code>`,
                             confirmButtonText: 'Go to My Parcels',
                         });
+
+                        await logTracking(
+                            {
+                                tracking_id: parcelInfo.tracking_id,
+                                status:'payment_done',
+                                details:`Paid by ${user.displayName}`
+                            }
+                        )
 
                         // ✅ Redirect to /myParcels
                         navigate('/dashboard/myParcels');
