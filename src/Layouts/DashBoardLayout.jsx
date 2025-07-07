@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router';
-import { FaHome, FaBoxOpen, FaMoneyCheckAlt, FaUserEdit, FaSearchLocation, FaUserCheck, FaUserClock, FaUserShield,FaMotorcycle, FaTasks,FaCheckCircle,FaWallet } from 'react-icons/fa';
+import { FaHome, FaBoxOpen, FaMoneyCheckAlt, FaUserEdit, FaSearchLocation, FaUserCheck, FaUserClock, FaUserShield, FaMotorcycle, FaTasks, FaCheckCircle, FaWallet, FaMapMarkedAlt } from 'react-icons/fa';
 import useUserRole from '../hooks/useUserRole';
 
 
@@ -78,28 +78,34 @@ const DashBoardLayout = () => {
                             Update Profile
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink to="/dashboard/trackings">
+                            <FaMapMarkedAlt className="inline-block mr-2" />
+                            Tracking
+                        </NavLink>
+                    </li>
 
                     {
-                        !roleLoading && role ==='rider' && (
+                        !roleLoading && role === 'rider' && (
                             <>
-                            <li>
-                                <NavLink to="/dashboard/pending-delivery">
-                                    <FaTasks className="inline-block mr-2" />
-                                    Pending Delivery
-                                </NavLink>
-                            </li>
-                             <li>
-                            <NavLink to="/dashboard/completed-delivery">
-                                <FaCheckCircle className="inline-block mr-2" />
-                                Completed Deliveries
-                            </NavLink>
-                             </li>
-                             <li>
-                                <NavLink to="/dashboard/my-earnings">
-                                <FaWallet className="inline-block mr-2" />
-                                My Earnings
-                            </NavLink>
-                             </li>
+                                <li>
+                                    <NavLink to="/dashboard/pending-delivery">
+                                        <FaTasks className="inline-block mr-2" />
+                                        Pending Delivery
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/completed-delivery">
+                                        <FaCheckCircle className="inline-block mr-2" />
+                                        Completed Deliveries
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/my-earnings">
+                                        <FaWallet className="inline-block mr-2" />
+                                        My Earnings
+                                    </NavLink>
+                                </li>
                             </>
                         )
                     }
@@ -108,12 +114,12 @@ const DashBoardLayout = () => {
                         !roleLoading && role === 'admin' && (
 
                             <>
-                            <li>
-                                <NavLink to="/dashboard/assign-riders">
-                                    <FaMotorcycle className="inline-block mr-2" />
-                                    Assign Rider
-                                </NavLink>
-                            </li>
+                                <li>
+                                    <NavLink to="/dashboard/assign-riders">
+                                        <FaMotorcycle className="inline-block mr-2" />
+                                        Assign Rider
+                                    </NavLink>
+                                </li>
                                 <li>
                                     <NavLink to="/dashboard/active-riders">
                                         <FaUserCheck className="inline-block mr-2" />

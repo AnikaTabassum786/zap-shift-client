@@ -25,6 +25,7 @@ import PendingDelivery from "../pages/Dashboard/PendingDelivery/PendingDelivery"
 import RiderRoute from "../routes/RiderRoute";
 import CompletedDelivery from "../pages/Dashboard/CompletedDelivery/CompletedDelivery";
 import MyEarnings from "../pages/Dashboard/MyEarnings/MyEarnings";
+import Tracking from "../pages/Dashboard/Tracking/Tracking";
 
 
 export const router = createBrowserRouter([
@@ -93,8 +94,8 @@ export const router = createBrowserRouter([
         Component:PaymentHistory
       },
       {
-        path:'track',
-        Component:TrackParcel
+        path:'trackings',
+        Component:Tracking
       },
       {
         path:'pending-delivery',
