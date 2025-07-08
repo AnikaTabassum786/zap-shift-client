@@ -125,13 +125,11 @@ const PaymentForm = () => {
                             confirmButtonText: 'Go to My Parcels',
                         });
 
-                        await logTracking(
-                            {
+                        await logTracking({
                                 tracking_id: parcelInfo.tracking_id,
                                 status:'payment_done',
                                 details:`Paid by ${user.displayName}`
-                            }
-                        )
+                            })
 
                         // ✅ Redirect to /myParcels
                         navigate('/dashboard/myParcels');

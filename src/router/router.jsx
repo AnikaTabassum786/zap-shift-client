@@ -13,7 +13,7 @@ import DashBoardLayout from "../Layouts/DashBoardLayout";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
-import TrackParcel from "../pages/Dashboard/TrackParcel/TrackParcel";
+
 import BeARider from "../pages/Dashboard/BeARider/BeARider";
 import PendingRiders from "../pages/Dashboard/PendingRiders/PendingRiders";
 import ActiveRiders from "../pages/Dashboard/ActiveRiders/ActiveRiders";
@@ -26,6 +26,7 @@ import RiderRoute from "../routes/RiderRoute";
 import CompletedDelivery from "../pages/Dashboard/CompletedDelivery/CompletedDelivery";
 import MyEarnings from "../pages/Dashboard/MyEarnings/MyEarnings";
 import Tracking from "../pages/Dashboard/Tracking/Tracking";
+import DashBoardHome from "../pages/Dashboard/DashBoardHome/DashBoardHome";
 
 
 export const router = createBrowserRouter([
@@ -81,6 +82,10 @@ export const router = createBrowserRouter([
     </PrivateRoute>,
 
     children:[
+      {
+          index:true,
+          Component:DashBoardHome,
+      },
       {
         path:'myParcels',
         Component:MyParcels
